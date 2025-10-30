@@ -1,0 +1,135 @@
+[2025-10-31 00:38:14,503][HYDRA] Launching 9 jobs locally
+[2025-10-31 00:38:14,503][HYDRA] 	#0 : algorithm=mappo task=vmas/navigation model=mlp_balanced seed=2 experiment.max_n_iters=500 experiment.sampling_device=cuda\:0 experiment.train_device=cuda\:0 experiment.project_name=benchmarl-2025-10-31
+/date/nfsShare/sudingli/gnn-rl/BenchMARL-gnn/benchmarl/experiment/experiment.py:313: UserWarning: max_n_frames and max_n_iters have both been set. The experiment will terminate after 500 iterations (3000000 frames).
+  warnings.warn(
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+/home/sudingli/miniconda3/envs/benchmarl-dev/lib/python3.10/site-packages/torchrl/objectives/ppo.py:445: DeprecationWarning: 'critic_coef' is deprecated and will be removed in torchrl v0.11. Please use 'critic_coeff' instead.
+  warnings.warn(
+/home/sudingli/miniconda3/envs/benchmarl-dev/lib/python3.10/site-packages/torchrl/objectives/ppo.py:511: DeprecationWarning: 'entropy_coef' is deprecated and will be removed in torchrl v0.11. Please use 'entropy_coeff' instead.
+  warnings.warn(
+wandb: Currently logged in as: sudingli (sudingli21) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run mappo_navigation_mlp__99bfbd87_25_10_31-00_38_14
+wandb: Tracking run with wandb version 0.22.3
+wandb: Run data is saved locally in /date/nfsShare/sudingli/gnn-rl/BenchMARL-gnn/multirun/2025-10-31/00-38-13/0/mappo_navigation_mlp__99bfbd87_25_10_31-00_38_14/wandb/run-20251031_003822-mappo_navigation_mlp__99bfbd87_25_10_31-00_38_14
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run mappo_navigation_mlp__99bfbd87_25_10_31-00_38_14
+wandb: ⭐️ View project at https://wandb.ai/sudingli21/benchmarl-2025-10-31
+wandb: 🚀 View run at https://wandb.ai/sudingli21/benchmarl-2025-10-31/runs/mappo_navigation_mlp__99bfbd87_25_10_31-00_38_14
+
+Algorithm: mappo, Task: vmas/navigation
+
+Loaded config:
+
+experiment:
+  sampling_device: cuda:0
+  train_device: cuda:0
+  buffer_device: cpu
+  share_policy_params: true
+  prefer_continuous_actions: true
+  collect_with_grad: false
+  parallel_collection: false
+  gamma: 0.99
+  lr: 5.0e-05
+  adam_eps: 1.0e-06
+  adam_extra_kwargs: {}
+  clip_grad_norm: true
+  clip_grad_val: 5.0
+  soft_target_update: true
+  polyak_tau: 0.005
+  hard_target_update_frequency: 5
+  exploration_eps_init: 0.8
+  exploration_eps_end: 0.01
+  exploration_anneal_frames: null
+  max_n_iters: 500
+  max_n_frames: 3000000
+  on_policy_collected_frames_per_batch: 6000
+  on_policy_n_envs_per_worker: 10
+  on_policy_n_minibatch_iters: 45
+  on_policy_minibatch_size: 400
+  off_policy_collected_frames_per_batch: 6000
+  off_policy_n_envs_per_worker: 10
+  off_policy_n_optimizer_steps: 1000
+  off_policy_train_batch_size: 128
+  off_policy_memory_size: 1000000
+  off_policy_init_random_frames: 0
+  off_policy_use_prioritized_replay_buffer: false
+  off_policy_prb_alpha: 0.6
+  off_policy_prb_beta: 0.4
+  evaluation: true
+  render: true
+  evaluation_interval: 120000
+  evaluation_episodes: 10
+  evaluation_deterministic_actions: true
+  evaluation_static: false
+  loggers:
+  - csv
+  - wandb
+  project_name: benchmarl-2025-10-31
+  wandb_extra_kwargs: {}
+  create_json: true
+  save_folder: null
+  restore_file: null
+  restore_map_location: null
+  checkpoint_interval: 0
+  checkpoint_at_end: false
+  keep_checkpoints_num: 3
+  exclude_buffer_from_checkpoint: false
+algorithm:
+  share_param_critic: true
+  clip_epsilon: 0.2
+  entropy_coef: 0.0
+  critic_coef: 1.0
+  loss_critic_type: l2
+  lmbda: 0.9
+  scale_mapping: biased_softplus_1.0
+  use_tanh_normal: true
+  minibatch_advantage: false
+task:
+  max_steps: 100
+  n_agents: 3
+  collisions: true
+  agents_with_same_goal: 1
+  observe_all_goals: false
+  shared_rew: false
+  split_goals: false
+  lidar_range: 0.35
+  agent_radius: 0.1
+model:
+  name: mlp
+  num_cells:
+  - 128
+  - 128
+  layer_class: torch.nn.Linear
+  activation_class: torch.nn.Tanh
+  activation_kwargs: null
+  norm_class: null
+  norm_kwargs: null
+  num_feature_dims: 1
+critic_model:
+  name: mlp
+  num_cells:
+  - 256
+  - 256
+  layer_class: torch.nn.Linear
+  activation_class: torch.nn.Tanh
+  activation_kwargs: null
+  norm_class: null
+  norm_kwargs: null
+  num_feature_dims: 1
+seed: 2
+
+  0%|          | 0/500 [00:00<?, ?it/s]/home/sudingli/miniconda3/envs/benchmarl-dev/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+wandb: Encoding video...
+mean return = -0.39525699615478516:   0%|          | 1/500 [00:22<3:09:22, 22.77s/it]mean return = -0.22896866500377655:   0%|          | 2/500 [00:38<2:35:05, 18.69s/it]mean return = -0.2722674608230591:   1%|          | 3/500 [00:54<2:23:06, 17.28s/it] mean return = -0.36064499616622925:   1%|          | 4/500 [01:10<2:19:44, 16.91s/it]mean return = -0.18741421401500702:   1%|          | 5/500 [01:25<2:14:47, 16.34s/it]mean return = 0.32346585392951965:   1%|          | 6/500 [01:41<2:13:35, 16.23s/it] mean return = 0.38299453258514404:   1%|▏         | 7/500 [01:57<2:12:55, 16.18s/it]mean return = 0.6482930779457092:   2%|▏         | 8/500 [02:14<2:12:19, 16.14s/it] mean return = 0.5345578193664551:   2%|▏         | 9/500 [02:29<2:11:22, 16.05s/it]mean return = 0.7173120379447937:   2%|▏         | 10/500 [02:45<2:10:29, 15.98s/it]mean return = 0.7857873439788818:   2%|▏         | 11/500 [03:02<2:11:09, 16.09s/it]mean return = 0.8502641916275024:   2%|▏         | 12/500 [03:18<2:10:47, 16.08s/it]mean return = 0.8310801386833191:   3%|▎         | 13/500 [03:34<2:11:40, 16.22s/it]mean return = 0.6989359259605408:   3%|▎         | 14/500 [03:50<2:11:08, 16.19s/it]mean return = 0.8801186680793762:   3%|▎         | 15/500 [04:06<2:10:12, 16.11s/it]mean return = 0.7603552341461182:   3%|▎         | 16/500 [04:23<2:11:01, 16.24s/it]mean return = 0.8430683016777039:   3%|▎         | 17/500 [04:39<2:11:06, 16.29s/it]mean return = 0.885704755783081:   4%|▎         | 18/500 [04:56<2:12:39, 16.51s/it] mean return = 0.8574274182319641:   4%|▍         | 19/500 [05:12<2:11:44, 16.43s/it]/home/sudingli/miniconda3/envs/benchmarl-dev/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+wandb: Encoding video...
+mean return = 0.9164111614227295:   4%|▍         | 20/500 [05:35<2:27:03, 18.38s/it]mean return = 0.8450727462768555:   4%|▍         | 21/500 [05:52<2:22:14, 17.82s/it]mean return = 0.911206841468811:   4%|▍         | 22/500 [06:09<2:20:06, 17.59s/it] mean return = 0.8986841440200806:   5%|▍         | 23/500 [06:26<2:17:53, 17.35s/it]mean return = 0.9386870265007019:   5%|▍         | 24/500 [06:42<2:14:58, 17.01s/it]mean return = 0.9022974967956543:   5%|▌         | 25/500 [06:59<2:14:17, 16.96s/it]mean return = 0.93023282289505:   5%|▌         | 26/500 [07:15<2:12:36, 16.79s/it]  mean return = 0.8950023055076599:   5%|▌         | 27/500 [07:32<2:12:06, 16.76s/it]mean return = 0.9403663277626038:   6%|▌         | 28/500 [07:48<2:11:32, 16.72s/it]mean return = 0.9886529445648193:   6%|▌         | 29/500 [08:05<2:12:02, 16.82s/it]mean return = 0.9740691781044006:   6%|▌         | 30/500 [08:23<2:13:16, 17.01s/it]mean return = 0.8704855442047119:   6%|▌         | 31/500 [08:40<2:12:37, 16.97s/it]mean return = 0.9328221082687378:   6%|▋         | 32/500 [08:57<2:12:21, 16.97s/it]mean return = 0.8542917370796204:   7%|▋         | 33/500 [09:13<2:11:02, 16.84s/it]mean return = 0.9083448052406311:   7%|▋         | 34/500 [09:30<2:11:03, 16.87s/it]mean return = 0.9369336366653442:   7%|▋         | 35/500 [09:47<2:10:41, 16.86s/it]mean return = 0.8437507748603821:   7%|▋         | 36/500 [10:04<2:11:05, 16.95s/it]mean return = 0.9344266653060913:   7%|▋         | 37/500 [10:21<2:11:22, 17.03s/it]mean return = 0.9404709935188293:   8%|▊         | 38/500 [10:38<2:09:39, 16.84s/it]mean return = 0.8250458240509033:   8%|▊         | 39/500 [10:55<2:10:20, 16.96s/it]wandb: Encoding video...
+mean return = 0.8753999471664429:   8%|▊         | 40/500 [11:17<2:21:54, 18.51s/it]mean return = 0.9162038564682007:   8%|▊         | 41/500 [11:34<2:17:51, 18.02s/it]mean return = 0.8756527900695801:   8%|▊         | 42/500 [11:51<2:13:53, 17.54s/it]mean return = 0.9444662928581238:   9%|▊         | 43/500 [12:08<2:13:47, 17.57s/it]mean return = 0.9153441786766052:   9%|▉         | 44/500 [12:25<2:12:30, 17.44s/it]mean return = 0.9012409448623657:   9%|▉         | 45/500 [12:43<2:11:45, 17.38s/it]mean return = 0.9332966804504395:   9%|▉         | 46/500 [12:59<2:10:13, 17.21s/it]mean return = 0.9011657238006592:   9%|▉         | 47/500 [13:17<2:09:57, 17.21s/it]mean return = 0.8289322257041931:  10%|▉         | 48/500 [13:33<2:08:31, 17.06s/it]mean return = 0.8707193732261658:  10%|▉         | 49/500 [13:51<2:10:04, 17.31s/it]mean return = 0.8673356175422668:  10%|█         | 50/500 [14:08<2:09:27, 17.26s/it]mean return = 0.9446572065353394:  10%|█         | 51/500 [14:26<2:09:23, 17.29s/it]mean return = 0.9174896478652954:  10%|█         | 52/500 [14:43<2:09:36, 17.36s/it]mean return = 0.9332667589187622:  11%|█         | 53/500 [15:00<2:07:30, 17.11s/it]mean return = 0.9225755333900452:  11%|█         | 54/500 [15:16<2:06:16, 16.99s/it]mean return = 0.9171625971794128:  11%|█         | 55/500 [15:33<2:05:24, 16.91s/it]mean return = 0.9108838438987732:  11%|█         | 56/500 [15:50<2:05:50, 17.01s/it]mean return = 0.9096280336380005:  11%|█▏        | 57/500 [16:08<2:06:18, 17.11s/it]mean return = 0.8825224041938782:  12%|█▏        | 58/500 [16:26<2:07:32, 17.31s/it]mean return = 0.9955500960350037:  12%|█▏        | 59/500 [16:43<2:07:58, 17.41s/it]wandb: Encoding video...
+mean return = 0.8693001866340637:  12%|█▏        | 60/500 [17:05<2:18:08, 18.84s/it]mean return = 0.9329673647880554:  12%|█▏        | 61/500 [17:22<2:13:12, 18.21s/it]mean return = 0.9139370322227478:  12%|█▏        | 62/500 [17:39<2:10:01, 17.81s/it]mean return = 0.9036684036254883:  13%|█▎        | 63/500 [17:56<2:08:59, 17.71s/it]mean return = 0.939754843711853:  13%|█▎        | 64/500 [18:13<2:06:13, 17.37s/it] mean return = 0.9477303624153137:  13%|█▎        | 65/500 [18:30<2:04:01, 17.11s/it]mean return = 0.938208818435669:  13%|█▎        | 66/500 [18:46<2:03:17, 17.05s/it] mean return = 0.9686495065689087:  13%|█▎        | 67/500 [19:03<2:02:12, 16.93s/it]mean return = 0.8576845526695251:  14%|█▎        | 68/500 [19:20<2:02:31, 17.02s/it]mean return = 0.9125978946685791:  14%|█▍        | 69/500 [19:37<2:02:16, 17.02s/it]mean return = 0.8998147249221802:  14%|█▍        | 70/500 [19:55<2:02:30, 17.09s/it]mean return = 0.9125482439994812:  14%|█▍        | 71/500 [20:11<2:00:58, 16.92s/it]mean return = 0.8767199516296387:  14%|█▍        | 72/500 [20:28<2:00:52, 16.94s/it]mean return = 0.9588872194290161:  15%|█▍        | 73/500 [20:45<2:01:11, 17.03s/it]mean return = 0.9412714838981628:  15%|█▍        | 74/500 [21:03<2:01:41, 17.14s/it]mean return = 0.9070627093315125:  15%|█▌        | 75/500 [21:19<2:00:11, 16.97s/it]mean return = 0.9363559484481812:  15%|█▌        | 76/500 [21:37<2:01:18, 17.17s/it]mean return = 0.8922719359397888:  15%|█▌        | 77/500 [21:54<2:01:12, 17.19s/it]mean return = 0.8826009035110474:  16%|█▌        | 78/500 [22:12<2:01:17, 17.25s/it]mean return = 0.9566295742988586:  16%|█▌        | 79/500 [22:28<1:59:10, 16.99s/it]wandb: Encoding video...
+mean return = 0.9137319326400757:  16%|█▌        | 80/500 [22:49<2:08:25, 18.35s/it]mean return = 0.9719188809394836:  16%|█▌        | 81/500 [23:06<2:04:27, 17.82s/it]mean return = 0.9157060384750366:  16%|█▋        | 82/500 [23:23<2:03:19, 17.70s/it]mean return = 0.8849745392799377:  17%|█▋        | 83/500 [23:41<2:02:48, 17.67s/it]mean return = 0.9169669151306152:  17%|█▋        | 84/500 [23:58<2:01:39, 17.55s/it]mean return = 0.9067771434783936:  17%|█▋        | 85/500 [24:15<2:00:09, 17.37s/it]mean return = 0.8670211434364319:  17%|█▋        | 86/500 [24:32<1:58:14, 17.14s/it]mean return = 0.9382855296134949:  17%|█▋        | 87/500 [24:49<1:57:08, 17.02s/it]mean return = 0.905135452747345:  18%|█▊        | 88/500 [25:06<1:57:31, 17.12s/it] mean return = 0.9344691038131714:  18%|█▊        | 89/500 [25:22<1:55:58, 16.93s/it]mean return = 0.9456124901771545:  18%|█▊        | 90/500 [25:40<1:56:30, 17.05s/it]mean return = 0.8974574208259583:  18%|█▊        | 91/500 [25:56<1:55:19, 16.92s/it]mean return = 0.9422730207443237:  18%|█▊        | 92/500 [26:13<1:53:50, 16.74s/it]mean return = 0.8835750222206116:  19%|█▊        | 93/500 [26:30<1:53:47, 16.77s/it]mean return = 0.8771998286247253:  19%|█▉        | 94/500 [26:47<1:53:55, 16.84s/it]mean return = 0.8337252140045166:  19%|█▉        | 95/500 [27:03<1:53:43, 16.85s/it]mean return = 0.8900675773620605:  19%|█▉        | 96/500 [27:20<1:52:56, 16.77s/it]mean return = 0.9614766240119934:  19%|█▉        | 97/500 [27:37<1:52:59, 16.82s/it]mean return = 0.9107715487480164:  20%|█▉        | 98/500 [27:54<1:53:45, 16.98s/it]mean return = 0.9426878690719604:  20%|█▉        | 99/500 [28:11<1:52:51, 16.89s/it]wandb: Encoding video...
+mean return = 0.8857808709144592:  20%|██        | 100/500 [28:34<2:04:05, 18.61s/it]mean return = 0.9531193971633911:  20%|██        | 101/500 [28:50<2:00:12, 18.08s/it]mean return = 0.8609717488288879:  20%|██        | 102/500 [29:08<1:59:04, 17.95s/it]mean return = 0.9151018261909485:  21%|██        | 103/500 [29:26<1:58:02, 17.84s/it]mean return = 0.8952658176422119:  21%|██        | 104/500 [29:43<1:56:56, 17.72s/it]mean return = 0.9595833420753479:  21%|██        | 105/500 [30:00<1:55:41, 17.57s/it]mean return = 0.9087417125701904:  21%|██        | 106/500 [30:17<1:53:46, 17.33s/it]mean return = 0.8023243546485901:  21%|██▏       | 107/500 [30:34<1:52:21, 17.15s/it]mean return = 0.8480905890464783:  22%|██▏       | 108/500 [30:50<1:50:27, 16.91s/it]mean return = 0.9069535732269287:  22%|██▏       | 109/500 [31:07<1:50:55, 17.02s/it]mean return = 0.9302307963371277:  22%|██▏       | 110/500 [31:26<1:52:42, 17.34s/it]mean return = 0.9047080278396606:  22%|██▏       | 111/500 [31:43<1:52:22, 17.33s/it]mean return = 0.9620104432106018:  22%|██▏       | 112/500 [31:59<1:50:37, 17.11s/it]mean return = 0.869830846786499:  23%|██▎       | 113/500 [32:17<1:50:18, 17.10s/it] mean return = 0.8840966820716858:  23%|██▎       | 114/500 [32:34<1:50:45, 17.22s/it]mean return = 0.9164692759513855:  23%|██▎       | 115/500 [32:51<1:49:38, 17.09s/it]mean return = 0.922927737236023:  23%|██▎       | 116/500 [33:08<1:50:13, 17.22s/it] mean return = 0.9520021677017212:  23%|██▎       | 117/500 [33:26<1:49:48, 17.20s/it]mean return = 0.8991870284080505:  24%|██▎       | 118/500 [33:43<1:49:16, 17.16s/it]mean return = 0.863216757774353:  24%|██▍       | 119/500 [34:00<1:48:43, 17.12s/it] wandb: Encoding video...
+mean return = 0.92694091796875:  24%|██▍       | 120/500 [34:22<1:58:04, 18.64s/it] 

@@ -1,0 +1,25 @@
+defaults:
+  - layers@layers.l1: mlp
+  - layers@layers.l2: gnn
+  - layers@layers.l3: mlp
+  - _self_
+
+intermediate_sizes: [64, 64]
+
+layers:
+  l1:
+    num_cells: [64]
+    activation_class: torch.nn.Tanh
+    layer_class: torch.nn.Linear
+  l2:
+    topology: full
+    self_loops: false
+    gnn_class: torch_geometric.nn.conv.GATv2Conv
+    gnn_kwargs:
+      heads: 4
+      concat: false
+  l3:
+    num_cells: [64]
+    activation_class: torch.nn.Tanh
+    layer_class: torch.nn.Linear
+

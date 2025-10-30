@@ -145,6 +145,11 @@ To launch an experiment from the command line you can do
 
 ```bash
 python benchmarl/run.py algorithm=mappo task=vmas/balance
+
+python benchmarl/run.py algorithm=mappo task=vmas/football
+
+python benchmarl/run.py algorithm=mappo task=vmas/dispersion
+
 ```
 [![Example](https://img.shields.io/badge/Example-blue.svg)](examples/running/run_experiment.sh)
 

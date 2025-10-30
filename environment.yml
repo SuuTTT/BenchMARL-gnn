@@ -1,0 +1,18 @@
+name: benchmarl-dev
+channels:
+  - defaults
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - tqdm
+  - pip:
+    - hydra-core
+    - -e .
+
+# Notes:
+# - This file will create a conda env and run `pip install -e .` to install the repository in editable mode.
+# - We purposefully do NOT list `torch`/`torchvision`/`torchrl` here because those packages require specific
+#   CUDA/CUDA-toolkit choices. Install them after env creation according to your CUDA/GPU setup. See DEVELOPER_SETUP.md
