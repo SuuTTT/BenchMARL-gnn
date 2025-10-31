@@ -1,0 +1,31 @@
+# LSTM-GNN-LSTM Sandwich
+# Architecture: LSTM[32] → GNN → LSTM[32]
+# Temporal → Spatial → Temporal processing
+
+defaults:
+  - layers@layers.l1: lstm
+  - layers@layers.l2: gnn
+  - layers@layers.l3: lstm
+  - _self_
+
+intermediate_sizes: [32, 32]
+
+layers:
+  l1:
+    hidden_size: 32
+    n_layers: 1
+    bias: true
+    dropout: 0
+    compile: false
+  l2:
+    topology: full
+    self_loops: false
+    gnn_class: torch_geometric.nn.conv.GraphConv
+    gnn_kwargs:
+      aggr: "mean"
+  l3:
+    hidden_size: 32
+    n_layers: 1
+    bias: true
+    dropout: 0
+    compile: false

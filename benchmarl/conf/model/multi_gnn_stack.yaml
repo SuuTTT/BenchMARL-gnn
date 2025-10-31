@@ -1,0 +1,35 @@
+# Multi-GNN Stack
+# Architecture: MLP[32] → GNN GraphConv → GNN GATv2 → MLP[32]
+# Different aggregations capture different patterns
+
+defaults:
+  - layers@layers.l1: mlp
+  - layers@layers.l2: gnn
+  - layers@layers.l3: gnn
+  - layers@layers.l4: mlp
+  - _self_
+
+intermediate_sizes: [32, 48, 32]
+
+layers:
+  l1:
+    num_cells: [32]
+    activation_class: torch.nn.Tanh
+    layer_class: torch.nn.Linear
+  l2:
+    topology: full
+    self_loops: false
+    gnn_class: torch_geometric.nn.conv.GraphConv
+    gnn_kwargs:
+      aggr: "add"
+  l3:
+    topology: full
+    self_loops: false
+    gnn_class: torch_geometric.nn.conv.GATv2Conv
+    gnn_kwargs:
+      heads: 3
+      concat: false
+  l4:
+    num_cells: [32]
+    activation_class: torch.nn.Tanh
+    layer_class: torch.nn.Linear

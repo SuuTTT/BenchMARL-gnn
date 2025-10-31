@@ -1,0 +1,30 @@
+# GRU-DeepSets Combination
+# Architecture: GRU[48] → DeepSets → MLP[32]
+# Temporal features → Aggregation → Output
+
+defaults:
+  - layers@layers.l1: gru
+  - layers@layers.l2: deepsets
+  - layers@layers.l3: mlp
+  - _self_
+
+intermediate_sizes: [48, 32]
+
+layers:
+  l1:
+    hidden_size: 48
+    n_layers: 1
+    bias: true
+    dropout: 0
+    compile: false
+  l2:
+    aggr: sum
+    out_features_local_nn: 32
+    local_nn_num_cells: [32]
+    local_nn_activation_class: torch.nn.Tanh
+    global_nn_num_cells: [32]
+    global_nn_activation_class: torch.nn.Tanh
+  l3:
+    num_cells: [32]
+    activation_class: torch.nn.Tanh
+    layer_class: torch.nn.Linear

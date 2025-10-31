@@ -594,9 +594,16 @@ class Experiment(CallbackNotifier):
                     save_folder = Path(os.getcwd())
 
         if self.config.restore_file is None:
-            self.name = generate_exp_name(
-                f"{self.algorithm_name}_{self.task_name}_{self.model_name}", ""
-            )
+            # Generate standardized experiment name: yyyy-mm-dd-hostname-devicename-task-algo
+            import socket
+            from datetime import datetime
+            
+            date_str = datetime.now().strftime("%Y-%m-%d")
+            hostname = socket.gethostname()
+            # Extract device name from train_device (e.g., "cuda:1" -> "cuda1", "cpu" -> "cpu")
+            device_name = self.config.train_device.replace(":", "")
+            
+            self.name = f"{date_str}-{hostname}-{device_name}-{self.task_name}-{self.algorithm_name}"
             self.folder_name = save_folder / self.name
 
         else:

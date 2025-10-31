@@ -1,0 +1,35 @@
+# MLP-GNN-GRU Combination
+# Architecture: MLP[64] → GNN GATv2 → GRU → MLP[32]
+# Feature extraction → Attention graph → Temporal smoothing
+
+defaults:
+  - layers@layers.l1: mlp
+  - layers@layers.l2: gnn
+  - layers@layers.l3: gru
+  - layers@layers.l4: mlp
+  - _self_
+
+intermediate_sizes: [64, 48, 32]
+
+layers:
+  l1:
+    num_cells: [64]
+    activation_class: torch.nn.Tanh
+    layer_class: torch.nn.Linear
+  l2:
+    topology: full
+    self_loops: false
+    gnn_class: torch_geometric.nn.conv.GATv2Conv
+    gnn_kwargs:
+      heads: 4
+      concat: false
+  l3:
+    hidden_size: 48
+    n_layers: 1
+    bias: true
+    dropout: 0
+    compile: false
+  l4:
+    num_cells: [32]
+    activation_class: torch.nn.Tanh
+    layer_class: torch.nn.Linear
