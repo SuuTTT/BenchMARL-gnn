@@ -18,10 +18,10 @@ MAX_ITERS="${2:-500}"
 WANDB_PROJECT="benchmarl-2025-10-31"
 
 # Models to compare
-MODELS="mlp_balanced,gnn_balanced_graphconv,gnn_balanced_gatv2,layers/deepsets"
+MODELS="mlp_balanced,gnn_balanced_graphconv,gnn_balanced_gatv2"
 
 # Simple tasks with fixed, small number of agents
-TASKS="vmas/balance,vmas/give_way"
+TASKS="vmas/discovery,vmas/give_way"
 
 echo "Configuration:"
 echo "  Algorithm: $ALGORITHM"
@@ -49,7 +49,7 @@ python benchmarl/run.py -m \
     algorithm=$ALGORITHM \
     task=$TASKS \
     model=$MODELS \
-    seed=0 \
+    seed=1 \
     experiment.max_n_iters=$MAX_ITERS \
     experiment.sampling_device=$DEVICE \
     experiment.train_device=$DEVICE \

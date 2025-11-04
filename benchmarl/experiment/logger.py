@@ -36,6 +36,7 @@ class Logger:
         environment_name: str,
         task_name: str,
         model_name: str,
+        model_architecture: str,
         group_map: Dict[str, List[str]],
         seed: int,
         project_name: str,
@@ -46,6 +47,7 @@ class Logger:
         self.environment_name = environment_name
         self.task_name = task_name
         self.model_name = model_name
+        self.model_architecture = model_architecture
         self.group_map = group_map
         self.seed = seed
 
@@ -77,6 +79,7 @@ class Logger:
                         "group": task_name,
                         "id": experiment_name,
                         "project": project_name,
+                        "tags": [model_architecture, algorithm_name, task_name],
                         **wandb_extra_kwargs,
                     },
                 )

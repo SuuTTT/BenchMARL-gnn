@@ -48,6 +48,14 @@ def load_experiment_from_hydra(
     task_config = load_task_config_from_hydra(cfg.task, task_name)
     model_config = load_model_config_from_hydra(cfg.model)
     critic_model_config = load_model_config_from_hydra(cfg.critic_model)
+    
+    # Get model architecture name from Hydra choices if available
+    model_architecture = None
+    if _has_hydra:
+        from hydra.core.hydra_config import HydraConfig
+        if HydraConfig.initialized():
+            hydra_choices = HydraConfig.get().runtime.choices
+            model_architecture = hydra_choices.get("model", None)
 
     return Experiment(
         task=task_config,
@@ -57,6 +65,7 @@ def load_experiment_from_hydra(
         seed=cfg.seed,
         config=experiment_config,
         callbacks=callbacks,
+        model_architecture=model_architecture,
     )
 
 

@@ -19,7 +19,7 @@ WANDB_PROJECT="benchmarl-2025-10-31"
 # Combination architectures from dev/combination/
 # Available combos: gnn_lstm_combo, deepsets_gnn_combo, gru_deepsets_combo, 
 #                   lstm_gnn_lstm_combo, mlp_gnn_gru_combo, multi_gnn_stack
-COMBOS="gnn_lstm_combo,deepsets_gnn_combo,gru_deepsets_combo,mlp_gnn_gru_combo"
+COMBOS="deepsets_gnn_combo,gru_deepsets_combo,mlp_gnn_gru_combo,gnn_lstm_combo"
 
 # Representative tasks from each category
 # Scalability: navigation (low), flocking (high)
@@ -46,9 +46,9 @@ echo ""
 # Calculate runs
 NUM_COMBOS=$(echo $COMBOS | tr ',' '\n' | wc -l)
 NUM_TASKS=$(echo $TASKS | tr ',' '\n' | wc -l)
-TOTAL_RUNS=$((NUM_COMBOS * NUM_TASKS * 3))
+TOTAL_RUNS=$((NUM_COMBOS * NUM_TASKS * 1))
 
-echo "Total runs: $TOTAL_RUNS (${NUM_COMBOS} combos × ${NUM_TASKS} tasks × 3 seeds)"
+echo "Total runs: $TOTAL_RUNS (${NUM_COMBOS} combos × ${NUM_TASKS} tasks × 1 seeds)"
 echo ""
 echo "Press Ctrl+C within 5 seconds to cancel..."
 sleep 5
@@ -58,7 +58,7 @@ python benchmarl/run.py -m \
     algorithm=$ALGORITHM \
     task=$TASKS \
     model=$COMBOS \
-    seed=0,1,2 \
+    seed=1 \
     experiment.max_n_iters=$MAX_ITERS \
     experiment.sampling_device=$DEVICE \
     experiment.train_device=$DEVICE \

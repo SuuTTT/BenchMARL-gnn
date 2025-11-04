@@ -71,6 +71,10 @@ nohup bash experiments/scripts/grouped/task_type_experiments.sh cuda:0 500 > 202
 bash experiments/scripts/grouped/simple_baseline_experiments.sh [device] [iterations]
 
 nohup bash experiments/scripts/grouped/simple_baseline_experiments.sh cuda:0 500 > 2025-10-31-c223-cuda1-simple_baseline_experiments.log &
+
+nohup bash experiments/scripts/grouped/simple_baseline_experiments.sh cuda:1 500 > 2025-11-02-c223-cuda1-simple_baseline_experiments.log &
+nohup bash experiments/scripts/grouped/simple_baseline_experiments.sh cuda:1 500 > 2025-11-02-c223-cuda1-simple_baseline_experiments.log &
+nohup bash experiments/scripts/grouped/simple_baseline_experiments.sh cuda:1 500 > 2025-11-02-c225-cuda1-simple_baseline_experiments-seed1.log 
 ```
 
 ### 5. Combination Architectures (`combination_experiments.sh`)
@@ -90,7 +94,49 @@ Tests promising model combinations on representative tasks from each category.
 bash experiments/scripts/grouped/combination_experiments.sh [device] [iterations]
 
 nohup bash experiments/scripts/grouped/combination_experiments.sh cuda:0 500 > 2025-10-31-c224-cuda0-combination_experiments.log &
+#update archi name
+nohup bash experiments/scripts/grouped/combination_experiments.sh cuda:1 500 > 2025-11-01-c224-cuda1-combination_experiments.log &
+nohup bash experiments/scripts/grouped/combination_experiments.sh cuda:0 500 > 2025-11-01-c224-cuda0-seed1-combination_experiments.log &
+```
 
+### 6. GNN-Focused Experiments (`gnn_focused_experiments.sh`)
+
+**Hypothesis**: GNN models excel at tasks requiring spatial relationships, explicit communication, and coordinated positioning among agents.
+
+**Task Categories**:
+- **High Coordination & Spatial Reasoning**: `transport`, `reverse_transport`, `football`
+- **Formation Control**: `joint_passage`, `ball_passage`, `ball_trajectory`, `wheel`
+- **Graph-Structured Relationships**: `flocking`, `wind_flocking`, `discovery`, `passage`
+- **Communication & Teamwork**: `simple_spread`, `simple_reference`, `simple_speaker_listener`
+
+**Models**: MLP baseline, GNN (GraphConv), GNN (GATv2)
+
+**Usage**:
+```bash
+bash experiments/scripts/grouped/gnn_focused_experiments.sh [device] [iterations]
+
+# Run on c223
+nohup bash experiments/scripts/grouped/gnn_focused_experiments.sh cuda:0 500 > 2025-11-04-c223-cuda0-gnn_focused_experiments.log &
+```
+
+### 7. LSTM-Focused Experiments (`lstm_focused_experiments.sh`)
+
+**Hypothesis**: LSTM/GRU models excel at tasks requiring temporal patterns, memory of past states, and trajectory prediction.
+
+**Task Categories**:
+- **Temporal Coordination**: `ball_trajectory`, `buzz_wire`, `wheel`, `balance`
+- **Sequential Decision Making**: `dropout`, `give_way`, `multi_give_way`, `passage`
+- **Partial Observability & Memory**: `navigation`, `sampling`, `simple_adversary`, `simple_crypto`, `simple_tag`
+- **Trajectory Prediction**: `football`, `ball_passage`
+
+**Models**: MLP baseline, GRU, LSTM
+
+**Usage**:
+```bash
+bash experiments/scripts/grouped/lstm_focused_experiments.sh [device] [iterations]
+
+# Run on c223
+nohup bash experiments/scripts/grouped/lstm_focused_experiments.sh cuda:1 500 > 2025-11-04-c223-cuda1-lstm_focused_experiments.log &
 ```
 
 ## Models Evaluated
@@ -99,7 +145,9 @@ All experiments use balanced parameter counts (~13-19K parameters):
 - `mlp_balanced`: Baseline MLP [128, 128]
 - `gnn_balanced_graphconv`: MLP[64] → GraphConv GNN → MLP[64]
 - `gnn_balanced_gatv2`: MLP[64] → GATv2 GNN → MLP[64]
-- `layers/deepsets`: DeepSets architecture
+- `gru_balanced`: GRU[128] + MLP[256, 256] recurrent architecture
+- `lstm_balanced`: LSTM[128] + MLP[256, 256] recurrent architecture
+- `layers/deepsets`: DeepSets architecture (for legacy compatibility)
 
 ## Experimental Setup
 

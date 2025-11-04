@@ -343,6 +343,7 @@ class Experiment(CallbackNotifier):
         config: ExperimentConfig,
         critic_model_config: Optional[ModelConfig] = None,
         callbacks: Optional[List[Callback]] = None,
+        model_architecture: Optional[str] = None,
     ):
         super().__init__(
             experiment=self, callbacks=callbacks if callbacks is not None else []
@@ -367,6 +368,7 @@ class Experiment(CallbackNotifier):
 
         self.algorithm_config = algorithm_config
         self.seed = seed
+        self._model_architecture_override = model_architecture
 
         self._setup()
 
@@ -566,12 +568,31 @@ class Experiment(CallbackNotifier):
                 )
             self.rollout_env = self.env_func().to(self.config.sampling_device)
 
+    def _get_model_architecture_name(self, model_config: ModelConfig) -> str:
+        """Generate a descriptive name for the model architecture."""
+        # If we have an override from Hydra choices, use that
+        if hasattr(self, '_model_architecture_override') and self._model_architecture_override:
+            return self._model_architecture_override
+            
+        # Otherwise, generate from model config
+        if isinstance(model_config, SequenceModelConfig):
+            # For sequence models, create a name from the sequence of models
+            model_names = []
+            for layer_config in model_config.model_configs:
+                layer_name = layer_config.associated_class().__name__.lower()
+                model_names.append(layer_name)
+            return "_".join(model_names)
+        else:
+            # For single models, use the class name
+            return model_config.associated_class().__name__.lower()
+
     def _setup_name(self):
         self.algorithm_name = self.algorithm_config.associated_class().__name__.lower()
         self.model_name = self.model_config.associated_class().__name__.lower()
         self.critic_model_name = (
             self.critic_model_config.associated_class().__name__.lower()
         )
+        self.model_architecture = self._get_model_architecture_name(self.model_config)
         self.environment_name = self.task.env_name().lower()
         self.task_name = self.task.name.lower()
         self._checkpointed_files = deque([])
@@ -594,7 +615,7 @@ class Experiment(CallbackNotifier):
                     save_folder = Path(os.getcwd())
 
         if self.config.restore_file is None:
-            # Generate standardized experiment name: yyyy-mm-dd-hostname-devicename-task-algo
+            # Generate standardized experiment name: model_architecture-task-algo-date-hostname-device
             import socket
             from datetime import datetime
             
@@ -603,7 +624,7 @@ class Experiment(CallbackNotifier):
             # Extract device name from train_device (e.g., "cuda:1" -> "cuda1", "cpu" -> "cpu")
             device_name = self.config.train_device.replace(":", "")
             
-            self.name = f"{date_str}-{hostname}-{device_name}-{self.task_name}-{self.algorithm_name}"
+            self.name = f"{self.model_architecture}-{self.task_name}-{self.algorithm_name}-seed{self.seed}-{date_str}-{hostname}-{device_name}"
             self.folder_name = save_folder / self.name
 
         else:
@@ -634,6 +655,7 @@ class Experiment(CallbackNotifier):
             "on_policy": self.on_policy,
             "algorithm_name": self.algorithm_name,
             "model_name": self.model_name,
+            "model_architecture": self.model_architecture,
             "task_name": self.task_name,
             "environment_name": self.environment_name,
             "seed": self.seed,
@@ -644,6 +666,7 @@ class Experiment(CallbackNotifier):
             experiment_config=self.config,
             algorithm_name=self.algorithm_name,
             model_name=self.model_name,
+            model_architecture=self.model_architecture,
             environment_name=self.environment_name,
             task_name=self.task_name,
             group_map=self.group_map,
